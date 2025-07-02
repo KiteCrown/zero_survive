@@ -1,11 +1,11 @@
 info.onScore(10, function () {
-    atsp += -50
+    atsp += -70
     music.play(music.createSoundEffect(WaveShape.Square, 1, 5000, 255, 0, 1000, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
     info.setScore(0)
-    game.splash("attack speed +")
+    mySprite.sayText("attack speed +", 1500, false)
 })
 info.onLifeZero(function () {
-    game.setGameOverMessage(false, "you survived  " + info.getTimeElapsed() + "  seconds")
+    game.setGameOverMessage(false, "you survived  " + info.getTimeElapsed())
     game.gameOver(false)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
@@ -38,14 +38,15 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     sprites.destroy(sprite, effects.fire, 500)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    music.play(music.createSoundEffect(WaveShape.Noise, 3300, 1400, 255, 0, 150, SoundExpressionEffect.Warble, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
+    info.changeLifeBy(-1)
     scene.cameraShake(4, 500)
     pause(1000)
-    info.changeLifeBy(-1)
+    music.play(music.createSoundEffect(WaveShape.Noise, 3300, 1400, 255, 0, 150, SoundExpressionEffect.Warble, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
 })
 let projectile: Sprite = null
 let mySprite2: Sprite = null
 let mySprite3: Sprite = null
+let mySprite: Sprite = null
 let cspd = 1000
 let atsp = 1000
 let stat = 3
@@ -54,7 +55,7 @@ info.setLife(5)
 game.splash("zero survive")
 scene.setBackgroundColor(9)
 tiles.setCurrentTilemap(tilemap`level1`)
-let mySprite = sprites.create(img`
+mySprite = sprites.create(img`
     . . . . . . f f f f . . . . . . 
     . . . . f f f 2 2 f f f . . . . 
     . . . f f f 2 2 2 2 f f f . . . 
